@@ -7,10 +7,10 @@ Atomist SDM Goal to use as a container goal to version projects.
 Use the goal with the following container goal definition:
 
 ```yaml
-version: 
-      
-  goals: 
-  - containers:  
+version:
+
+  goals:
+  - containers:
     - name: version
       image: atomist/version-goal
     output:
@@ -29,7 +29,7 @@ at [atomist-community.slack.com][slack].
 
 If you find a problem, please create an [issue][].
 
-[issue]: https://github.com/atomist/sdm-base/issues
+[issue]: https://github.com/atomist/version-goal/issues
 
 ## Development
 
@@ -40,8 +40,8 @@ on how to write your own SDM features and automations.
 
 ### Release
 
-Releases are handled via the SDM itself.  Just press the release
-button in Slack or the Atomist dashboard.
+Releases are handled via the SDM building this project.  Just press
+the release button in Slack or the Atomist dashboard.
 
 ---
 
