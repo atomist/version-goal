@@ -15,9 +15,11 @@
  */
 
 import {
+    configureLogging,
     GitCommandGitProject,
     GitHubRepoRef,
     GitProject,
+    PlainLogging,
 } from "@atomist/automation-client";
 import {
     LoggingProgressLog,
@@ -27,6 +29,8 @@ import { NodeProjectVersioner } from "@atomist/sdm-pack-node";
 import { MavenProjectVersioner } from "@atomist/sdm-pack-spring";
 import { codeLine } from "@atomist/slack-messages";
 import * as fs from "fs-extra";
+
+configureLogging(PlainLogging);
 
 async function executeVersion(): Promise<number> {
     const goal: SdmGoalEvent = await fs.readJson(process.env.ATOMIST_GOAL);
