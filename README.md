@@ -11,8 +11,14 @@ version:
       
   goals: 
   - containers:  
-    name: version
-    image: atomist/version-goal
+      name: version
+      image: atomist/version-goal
+    output:
+    - classifier: cache
+      pattern:
+        glob_pattern:
+        - pom.xml
+        - package.json
 ```
 
 ## Support
