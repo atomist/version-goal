@@ -13,7 +13,5 @@ RUN npm ci \
 
 COPY . ./
 
-USER atomist:atomist
-
 ENTRYPOINT ["node"]
 CMD ["/sdm/index.js"]

@@ -11,7 +11,7 @@ version:
       
   goals: 
   - containers:  
-      name: version
+    - name: version
       image: atomist/version-goal
     output:
     - classifier: cache
