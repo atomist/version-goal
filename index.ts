@@ -23,55 +23,71 @@ import {
 } from "@atomist/automation-client";
 import {
     LoggingProgressLog,
+    ProgressLog,
     SdmGoalEvent,
 } from "@atomist/sdm";
+import { ProjectVersioner } from "@atomist/sdm-core";
 import { NodeProjectVersioner } from "@atomist/sdm-pack-node";
 import { MavenProjectVersioner } from "@atomist/sdm-pack-spring";
+import { FileVersioner } from "@atomist/sdm-pack-version";
 import { codeLine } from "@atomist/slack-messages";
 import * as fs from "fs-extra";
 
-configureLogging(PlainLogging);
+async function logExecuteVersion(): Promise<number> {
+    configureLogging(PlainLogging);
+    const log = new LoggingProgressLog("version", "info");
+    const status = await executeVersion(log);
+    await log.close();
+    return status;
+}
 
-async function executeVersion(): Promise<number> {
+async function executeVersion(log: ProgressLog): Promise<number> {
+    if (!process.env.ATOMIST_GOAL || !process.env.ATOMIST_PROJECT_DIR || !process.env.ATOMIST_RESULT) {
+        log.write(`Missing environment variables, aborting: ATOMIST_GOAL=${process.env.ATOMIST_GOAL} ` +
+            `ATOMIST_PROJECT_DIR=${process.env.ATOMIST_PROJECT_DIR} ATOMIST_RESULT=${process.env.ATOMIST_RESULT}\n`);
+        return 1;
+    }
     const goal: SdmGoalEvent = await fs.readJson(process.env.ATOMIST_GOAL);
     const project: GitProject = await GitCommandGitProject.fromExistingDirectory(GitHubRepoRef.from({
         owner: goal.repo.owner,
         repo: goal.repo.name,
         branch: goal.branch,
-        sha: goal.push.after.sha,
+        sha: goal.push.after?.sha || undefined,
     }), process.env.ATOMIST_PROJECT_DIR) as any;
-    const log = new LoggingProgressLog("version", "info");
 
-    let version;
+    let versioner: ProjectVersioner | undefined;
     if (await project.hasFile("package.json")) {
-        version = await NodeProjectVersioner(goal, project, log);
+        versioner = NodeProjectVersioner;
     } else if (await project.hasFile("pom.xml")) {
-        version = await MavenProjectVersioner(goal, project, log);
+        versioner = MavenProjectVersioner;
+    } else if (await project.hasFile(".version") || await project.hasFile("VERSION")) {
+        versioner = FileVersioner;
+    }
+    if (!versioner) {
+        log.write("No recognized version file found\n");
+        return 1;
     }
 
-    await log.close();
-
-    if (!!version) {
-        const result = {
-            SdmGoal: {
-                description: `Versioned ${codeLine(version)}`,
-                push: {
-                    after: {
-                        version,
-                    },
+    const version = await versioner(goal, project, log);
+    log.write(`Calculated version ${version}\n`);
+    const result = {
+        SdmGoal: {
+            description: `Versioned ${codeLine(version)}`,
+            push: {
+                after: {
+                    version,
                 },
             },
-        };
-        await fs.writeJson(process.env.ATOMIST_RESULT, result);
-        return 0;
-    }
-    return 1;
+        },
+    };
+    await fs.writeJson(process.env.ATOMIST_RESULT, result);
+    return 0;
 }
 
-executeVersion()
+logExecuteVersion()
     .then(code => process.exit(code))
     .catch(e => {
-        console.error(`Unhandled error: ${e.message}`);
-        console.error(e.stack);
+        process.stderr.write(`Unhandled error: ${e.message}\n`);
+        process.stderr.write(e.stack);
         process.exit(102);
     });
