@@ -14,34 +14,60 @@
  * limitations under the License.
  */
 
-import { AnyPush } from "@atomist/sdm";
-import { configure } from "@atomist/sdm-core";
-import { HelloWorldGoalConfigurer } from "./lib/goals/goalConfigurer";
-import { HelloWorldGoalCreator } from "./lib/goals/goalCreator";
-import { HelloWorldGoals } from "./lib/goals/goals";
+import {
+    GitCommandGitProject,
+    GitHubRepoRef,
+    GitProject,
+} from "@atomist/automation-client";
+import {
+    LoggingProgressLog,
+    SdmGoalEvent,
+} from "@atomist/sdm";
+import { NodeProjectVersioner } from "@atomist/sdm-pack-node";
+import { MavenProjectVersioner } from "@atomist/sdm-pack-spring";
+import { codeLine } from "@atomist/slack-messages";
+import * as fs from "fs-extra";
 
-/**
- * The main entry point into the SDM
- */
-export const configuration = configure<HelloWorldGoals>(async sdm => {
+async function executeVersion(): Promise<number> {
+    const goal: SdmGoalEvent = await fs.readJson(process.env.ATOMIST_GOAL);
+    const project: GitProject = await GitCommandGitProject.fromExistingDirectory(GitHubRepoRef.from({
+        owner: goal.repo.owner,
+        repo: goal.repo.name,
+        branch: goal.branch,
+        sha: goal.push.after.sha,
+    }), process.env.ATOMIST_PROJECT_DIR) as any;
+    const log = new LoggingProgressLog("version");
 
-    // Use the sdm instance to configure commands etc
-    sdm.addCommand({
-        name: "HelloWorld",
-        description: "Command that responds with a 'hello world'",
-        listener: async ci => {
-            await ci.addressChannels("Hello World");
-        },
+    let version;
+    if (await project.hasFile("package.json")) {
+        version = await NodeProjectVersioner(goal, project, log);
+    } else if (await project.hasFile("pom.xml")) {
+        version = await MavenProjectVersioner(goal, project, log);
+    }
+
+    await log.close();
+
+    if (!!version) {
+        const result = {
+            SdmGoal: {
+                description: `Versioned ${codeLine(version)}`,
+                push: {
+                    after: {
+                        version,
+                    },
+                },
+            },
+        };
+        await fs.writeJson(process.env.ATOMIST_RESULT, result);
+        return 0;
+    }
+    return 1;
+}
+
+executeVersion()
+    .then(code => process.exit(code))
+    .catch(e => {
+        console.error(`Unhandled error: ${e.message}`);
+        console.error(e.stack);
+        process.exit(102);
     });
-
-    // Create goals and configure them
-    const goals = await sdm.createGoals(HelloWorldGoalCreator, [HelloWorldGoalConfigurer]);
-
-    // Return all push rules
-    return {
-        hello: {
-            test: AnyPush,
-            goals: goals.helloWorld,
-        },
-    };
-});
