@@ -47,7 +47,7 @@ Apache License 2.0 - [http://www.apache.org/licenses/LICENSE-2.0](http://www.apa
 |`@atomist/sdm-pack-build`|`1.0.6`|Atomist|[https://github.com/atomist/sdm-pack-build](https://github.com/atomist/sdm-pack-build)|
 |`@atomist/sdm-pack-node`|`1.1.1`|Atomist|[https://github.com/atomist/sdm-pack-node](https://github.com/atomist/sdm-pack-node)|
 |`@atomist/sdm-pack-spring`|`2.0.1`|Atomist|[https://github.com/atomist/sdm-pack-spring](https://github.com/atomist/sdm-pack-spring)|
-|`@atomist/sdm-pack-version`|`0.1.1-master.20191106215058`|Atomist|[https://github.com/atomist/sdm-pack-version](https://github.com/atomist/sdm-pack-version)|
+|`@atomist/sdm-pack-version`|`0.1.1`|Atomist|[https://github.com/atomist/sdm-pack-version](https://github.com/atomist/sdm-pack-version)|
 |`@atomist/sdm`|`1.8.0-dynamic-goals.20191107230956`|Atomist|[https://github.com/atomist/sdm](https://github.com/atomist/sdm)|
 |`@atomist/slack-messages`|`1.1.1`|Atomist|[https://github.com/atomist/slack-messages](https://github.com/atomist/slack-messages)|
 |`@kubernetes/client-node`|`0.10.3`|Kubernetes Authors|[https://github.com/kubernetes-client/javascript](https://github.com/kubernetes-client/javascript)|
