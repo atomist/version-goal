@@ -40,7 +40,7 @@ async function executeVersion(): Promise<number> {
         branch: goal.branch,
         sha: goal.push.after.sha,
     }), process.env.ATOMIST_PROJECT_DIR) as any;
-    const log = new LoggingProgressLog("version");
+    const log = new LoggingProgressLog("version", "info");
 
     let version;
     if (await project.hasFile("package.json")) {
