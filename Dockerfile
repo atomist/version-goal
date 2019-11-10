@@ -1,7 +1,7 @@
 FROM atomist/sdm-base:0.3.0
 
 RUN apt-get update && apt-get install -y \
-        openjdk-8-jdk-headless \
+        openjdk-10-jdk-headless \
         maven \
         gradle \
     && rm -rf /var/lib/apt/lists/*
@@ -13,5 +13,4 @@ RUN npm ci \
 
 COPY . ./
 
-ENTRYPOINT ["node"]
-CMD ["/sdm/index.js"]
+ENTRYPOINT ["node", "/sdm/node_modules/@atomist/goal/bin/start.js"]
