@@ -45,7 +45,7 @@ Apache License 2.0 - [http://www.apache.org/licenses/LICENSE-2.0](http://www.apa
 | Name | Version | Publisher | Repository |
 |------|---------|-----------|------------|
 |`@atomist/cli`|`1.8.0`|Atomist|[https://github.com/atomist/cli](https://github.com/atomist/cli)|
-|`@atomist/goal`|`0.1.0-master.20191110004531`|Atomist|[https://github.com/atomist/goal](https://github.com/atomist/goal)|
+|`@atomist/goal`|`0.1.0-master.20191110012012`|Atomist|[https://github.com/atomist/goal](https://github.com/atomist/goal)|
 |`@atomist/sdm-core`|`1.7.0`|Atomist|[https://github.com/atomist/sdm-core](https://github.com/atomist/sdm-core)|
 |`@atomist/sdm-core`|`1.8.0-dynamic-goals.20191108152504`|Atomist|[https://github.com/atomist/sdm-core](https://github.com/atomist/sdm-core)|
 |`@atomist/sdm-local`|`1.2.1`|Atomist|[https://github.com/atomist/sdm-local](https://github.com/atomist/sdm-local)|
@@ -192,7 +192,7 @@ GNU General Public License v3.0 only - [https://www.gnu.org/licenses/gpl-3.0-sta
 |------|---------|-----------|------------|
 |`@atomist/antlr`|`1.0.2`|Atomist|[https://github.com/atomist/antlr-ts](https://github.com/atomist/antlr-ts)|
 |`@atomist/automation-client`|`1.7.0`|Atomist|[https://github.com/atomist/automation-client](https://github.com/atomist/automation-client)|
-|`@atomist/automation-client`|`1.8.0-master.20191107225525`|Atomist|[https://github.com/atomist/automation-client](https://github.com/atomist/automation-client)|
+|`@atomist/automation-client`|`1.8.0-master.20191110005338`|Atomist|[https://github.com/atomist/automation-client](https://github.com/atomist/automation-client)|
 |`@atomist/microgrammar`|`1.2.1`|Atomist|[https://github.com/atomist/microgrammar](https://github.com/atomist/microgrammar)|
 |`@atomist/tree-path`|`1.0.3`|Atomist|[https://github.com/atomist/tree-path](https://github.com/atomist/tree-path)|
 
