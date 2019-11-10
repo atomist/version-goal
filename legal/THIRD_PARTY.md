@@ -45,7 +45,7 @@ Apache License 2.0 - [http://www.apache.org/licenses/LICENSE-2.0](http://www.apa
 | Name | Version | Publisher | Repository |
 |------|---------|-----------|------------|
 |`@atomist/cli`|`1.8.0`|Atomist|[https://github.com/atomist/cli](https://github.com/atomist/cli)|
-|`@atomist/goal`|`0.1.0-master.20191110012012`|Atomist|[https://github.com/atomist/goal](https://github.com/atomist/goal)|
+|`@atomist/goal`|`0.1.0-master.20191110153353`|Atomist|[https://github.com/atomist/goal](https://github.com/atomist/goal)|
 |`@atomist/sdm-core`|`1.7.0`|Atomist|[https://github.com/atomist/sdm-core](https://github.com/atomist/sdm-core)|
 |`@atomist/sdm-core`|`1.8.0-dynamic-goals.20191108152504`|Atomist|[https://github.com/atomist/sdm-core](https://github.com/atomist/sdm-core)|
 |`@atomist/sdm-local`|`1.2.1`|Atomist|[https://github.com/atomist/sdm-local](https://github.com/atomist/sdm-local)|
