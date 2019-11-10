@@ -1,7 +1,7 @@
 FROM atomist/sdm-base:0.3.0
 
 RUN apt-get update && apt-get install -y \
-        openjdk-10-jdk-headless \
+        openjdk-8-jdk-headless \
         maven \
         gradle \
     && rm -rf /var/lib/apt/lists/*
