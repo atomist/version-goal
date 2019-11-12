@@ -31,6 +31,7 @@ export const version: GoalExecutor = async gi => {
 
     const { goalEvent, project, progressLog } = gi;
 
+    // Extract the version from the projects
     let versioner: sdm_core.ProjectVersioner | undefined;
     if (await project.hasFile("package.json")) {
         versioner = NodeProjectVersioner;
@@ -48,6 +49,11 @@ export const version: GoalExecutor = async gi => {
     }
 
     const v = await versioner(goalEvent, project, progressLog);
+
+    // Push the version back into the project
+    if (await project.hasFile("package.json")) {
+        await gi.spawn("npm", ["version", "--no-git-tag-version", v]);
+    }
 
     progressLog.write(`Calculated version ${v}`);
 
