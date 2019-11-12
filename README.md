@@ -12,7 +12,7 @@ version:
   goals:
   - containers:
     - name: version
-      image: atomist/version-goal
+      image: atomist/version-goal@master
     output:
     - classifier: cache
       pattern:
