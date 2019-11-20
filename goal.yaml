@@ -1,0 +1,12 @@
+version:
+  containers:
+    - name: version
+      image: atomist/version-goal:0.1.0-master.20191112221212
+  output:
+    - classifier: version
+      pattern:
+        glob_pattern:
+          - package.json
+          - pom.xml
+          - .version
+          - VERSION
