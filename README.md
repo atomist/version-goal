@@ -8,17 +8,9 @@ Use the goal with the following container goal definition:
 
 ```yaml
 version:
-
+  
   goals:
-  - containers:
-    - name: version
-      image: atomist/version-goal@master
-    output:
-    - classifier: cache
-      pattern:
-        glob_pattern:
-        - pom.xml
-        - package.json
+  - atomist/version-goal@0.0.1
 ```
 
 ## Support
