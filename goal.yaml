@@ -4,7 +4,7 @@ version:
     - name: version
       image: atomist/version-goal:0.1.0-master.20191112221212
   output:
-    - '${repo.owner}/${repo.name}/${branch}/${sha}/version':
+    - classifier: ${repo.owner}/${repo.name}/${branch}/${sha}/version
       pattern:
         glob_pattern:
           - package.json
