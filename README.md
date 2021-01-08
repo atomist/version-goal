@@ -15,7 +15,7 @@ version:
 
 ## Support
 
-General support questions should be discussed in the `#support`
+General support questions should be discussed in the `#help`
 channel in our community Slack workspace
 at [atomist-community.slack.com][slack].
 
